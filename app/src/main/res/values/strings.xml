@@ -15,7 +15,7 @@
     <string name="TheAuthor">Author: </string>
     <string name="TheBook">Book: </string>
     <string name="ClassUsed">Class: </string>
-    <string name="Condition">theCondition: </string>
+    <string name="Condition">Condition: </string>
     <string name="ISBNasString">ISBN: </string>
     <string name="PriceasString">Price: </string>
     <string name="check">Check Details</string>
