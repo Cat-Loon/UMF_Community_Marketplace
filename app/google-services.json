@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "620324160576",
+    "firebase_url": "https://umfcommunitymarketplace.firebaseio.com",
+    "project_id": "umfcommunitymarketplace",
+    "storage_bucket": "umfcommunitymarketplace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620324160576:android:a54dcaa29eae224c",
+        "android_client_info": {
+          "package_name": "com.umfmarketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620324160576-89hlev6vsa2dd4isida8i8o92ts0ia03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umfmarketplace",
+            "certificate_hash": "9cb4632806b841a08b6ebf4e71e1351ee68d09a8"
+          }
+        },
+        {
+          "client_id": "620324160576-gucrg5hpcei9d20v0dqlr0j3lstlthrh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umfmarketplace",
+            "certificate_hash": "b74078f8a7cafa064531b93411a357ea17c1d2dd"
+          }
+        },
+        {
+          "client_id": "620324160576-sdf8a5h2fcdlasrug972uhvenoklku2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPXfg8zr3dq9eNM_b5rPtH0wXugfWTLrM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620324160576-sdf8a5h2fcdlasrug972uhvenoklku2t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
