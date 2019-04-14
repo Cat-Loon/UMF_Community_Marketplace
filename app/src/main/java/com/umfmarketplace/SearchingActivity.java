@@ -87,19 +87,20 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
 
+        /*
         mAuthor = findViewById(R.id.author);
         mBook = findViewById(R.id.book);
         mISBN = findViewById(R.id.isbn);
         mPrice = findViewById(R.id.price);
         mCondition = findViewById(R.id.condition);
-        mClassUsed = findViewById(R.id.classused);
+        mClassUsed = findViewById(R.id.classused);*/
 
         getElasticPassword();
         init();
 
     }
 
-    private void setUpListingsList(){
+    /*private void setUpListingsList(){
 
         RecyclerViewMargin itemDecorator = new RecyclerViewMargin(GRID_ITEM_MARGIN, NUM_GRID_COLUMNS);
         mRecyclerView.addItemDecoration(itemDecorator);
@@ -108,7 +109,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
         mAdapter = new MyAdapter(mLists);
         mRecyclerView.setAdapter(mAdapter);
 
-    }
+    }*/
 
     private void init() {
         /*mFilters.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +120,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
             }
         });*/
 
-        getPostInfo();
+        //getPostInfo();
 
         mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -141,7 +142,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                     HashMap<String, String> headerMap = new HashMap<String, String>();
                     headerMap.put("Authorization", Credentials.basic("user", mElasticPassword));
 
-                    String searchString = "";
+                    String searchString = mSearchField.getText().toString();
 
                     Call<HitsObject> call = searchAPI.search(headerMap, "AND", searchString);
 
@@ -166,10 +167,12 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                                     Log.d(TAG, "onResponse: data: " + hitsList.getPostIndex().get(i).getListing().toString());
                                     mLists.add(hitsList.getPostIndex().get(i).getListing());
                                 }
+                                mAdapter = new MyAdapter(mLists);
+                                mRecyclerView.setAdapter(mAdapter);
 
                                 Log.d(TAG, "onResponse: size: " + mLists.size());
                                 //setup the list of posts
-                                setUpListingsList();
+                                //setUpListingsList();
 
                             } catch (NullPointerException e) {
                                 Log.e(TAG, "onResponse: NullPointerException: " + e.getMessage());
@@ -192,7 +195,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
         });
     }
 
-    private void getPostInfo(){
+    /*private void getPostInfo(){
         Log.d(TAG, "getPostInfo: getting the post information.");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -223,6 +226,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                     mCondition.setText(List.getCondition());
                     mClassUsed.setText(List.getClassUsed());
 
+
                 }
             }
 
@@ -231,7 +235,7 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
 
             }
         });
-    }
+    }*/
 
     private void getElasticPassword(){
         Log.d(TAG,"Retrieving ElasticSearch password from Firebase");
@@ -285,6 +289,9 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
             headerMap.put("Authorization", Credentials.basic("user", mElasticPassword));
 
             String searchString = "";
+            if(!mSearchField.equals("")){
+                searchString = mSearchField.getText().toString();
+            }
 
             Call<HitsObject> call = searchAPI.search(headerMap, "AND", searchString);
 
@@ -310,9 +317,10 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                             mLists.add(hitsList.getPostIndex().get(i).getListing());
                         }
                         Log.d(TAG, "onResponse - size: " + mLists.size());
-
+                        mAdapter = new MyAdapter(mLists);
+                        mRecyclerView.setAdapter(mAdapter);
                         //Set up list of Book Listings
-                        setUpListingsList();
+                        //setUpListingsList();
                     }
                     catch(NullPointerException e){
                         Log.e(TAG, "onResponse - NullPointerException: " + e.getMessage());

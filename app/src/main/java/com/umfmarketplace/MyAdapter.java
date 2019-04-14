@@ -39,6 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         myViewHolder.Condition.setText(theListings.get(i).getCondition());
         myViewHolder.ISBNasString.setText(theListings.get(i).getISBNasString());
         myViewHolder.PriceasString.setText(theListings.get(i).getPriceasString());
+        myViewHolder.SellerEmail.setText(theListings.get(i).getSellerEmail());
     }
 
 
@@ -49,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class myViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView Author, Book, ClassName, Condition, ISBNasString, PriceasString;
+        public TextView Author, Book, ClassName, Condition, ISBNasString, PriceasString, SellerEmail;
         public myViewHolder(View itemView){
             super(itemView);
             Author = itemView.findViewById(R.id.TheAuthor);
@@ -58,6 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Condition = itemView.findViewById(R.id.Condition);
             ISBNasString = itemView.findViewById(R.id.ISBNasString);
             PriceasString = itemView.findViewById(R.id.PriceasString);
+            SellerEmail = itemView.findViewById(R.id.SellerEmail);
         }
     }
 }

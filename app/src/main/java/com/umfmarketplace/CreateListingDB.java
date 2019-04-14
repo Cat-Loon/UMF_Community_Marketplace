@@ -25,21 +25,23 @@ public class CreateListingDB extends AppCompatActivity {
         public String PriceasString;
         public String Condition;
         public String ClassUsed;
+        public String SellerEmail;
 
-        public BookListing(String BookNameIn, String AuthorNameIn, String ISBNIn, String PriceIn, String ConditionIn, String ClassUsedIn){
+        public BookListing(String BookNameIn, String AuthorNameIn, String ISBNIn, String PriceIn, String ConditionIn, String ClassUsedIn, String EmailIn){
             TheBook = BookNameIn;
             TheAuthor = AuthorNameIn;
             ISBNasString = ISBNIn;
             PriceasString = PriceIn;
             Condition = ConditionIn;
             ClassUsed = ClassUsedIn;
+            SellerEmail = EmailIn;
         }
     }
 
     private Button CreateListing;
     private Button scanTextbook;
     private Button backToMyListings;
-    private EditText BookName, AuthorName, BookISBN, BookPrice, BookCondition, BookClassUsed;
+    private EditText BookName, AuthorName, BookISBN, BookPrice, BookCondition, BookClassUsed, sellerEmail;
     private  TextView PrintString;
 
 
@@ -61,6 +63,7 @@ public class CreateListingDB extends AppCompatActivity {
         BookPrice = findViewById(R.id.Price);
         BookCondition = findViewById(R.id.BookCondition);
         BookClassUsed = findViewById(R.id.BookClassUsed);
+        sellerEmail = findViewById(R.id.sellerEmail);
 
         PrintString = findViewById(R.id.PrintString);
 
@@ -74,6 +77,7 @@ public class CreateListingDB extends AppCompatActivity {
                 String Price = BookPrice.getText().toString();
                 String Condition = BookCondition.getText().toString().trim();
                 String Class = BookClassUsed.getText().toString().trim();
+                String Email = sellerEmail.getText().toString().trim();
                 String Result;
 
                 if (TextUtils.isEmpty(Book)){
@@ -91,8 +95,11 @@ public class CreateListingDB extends AppCompatActivity {
                 if (TextUtils.isEmpty(Condition)){
                     BookCondition.setError("Required");
                 }
+                if (TextUtils.isEmpty(Email)){
+                    sellerEmail.setError("Required");
+                }
 
-                BookListing TheListing = new BookListing(Book, Author, ISBN, Price, Condition, Class);
+                BookListing TheListing = new BookListing(Book, Author, ISBN, Price, Condition, Class, Email);
                 reference.child(Author).setValue(TheListing);
 
                 Result = "Textbook: " + TheListing.TheBook + " by " + TheListing.TheAuthor;

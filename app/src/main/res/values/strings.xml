@@ -23,6 +23,7 @@
     <string name="title_activity_view_listings">ViewListings</string>
     <string name="node_elastic">elasticsearch</string>
     <string name="field_password">password</string>
+    <string name="contact_email">Contact\nEmail:</string>
 
 
 </resources>

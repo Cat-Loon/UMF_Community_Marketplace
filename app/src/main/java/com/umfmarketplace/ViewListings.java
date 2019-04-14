@@ -1,5 +1,6 @@
 package com.umfmarketplace;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ViewListings extends AppCompatActivity {
+public class ViewListings extends AppCompatActivity implements
+        View.OnClickListener {
 
     DatabaseReference reference;
     RecyclerView recyclerView;
@@ -39,6 +41,7 @@ public class ViewListings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_listings);
 
+        findViewById(R.id.MainMenu).setOnClickListener(this);
         recyclerView = findViewById(R.id.ListingRecycler);
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -62,15 +65,15 @@ public class ViewListings extends AppCompatActivity {
                 Toast.makeText(ViewListings.this, "oops.... something is wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
     }
 
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
 
-
-
-
+        if (i == R.id.MainMenu) {
+            Intent mainMenu = new Intent(ViewListings.this, MainActivity.class);
+            startActivity(mainMenu);
+        }
+    }
 }
