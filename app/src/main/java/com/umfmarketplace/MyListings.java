@@ -1,3 +1,11 @@
+/* Authored by: Katelynn Slater & Jared Suave
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Special thanks to Mitch Tabian for his documented work on ElasticSearch and querying with Retrofit
+    and to the Firebase Google team for their support articles for Firebase Authentication
+ */
+
 package com.umfmarketplace;
 
 import android.content.DialogInterface;
@@ -9,7 +17,7 @@ import android.view.View;
 public class MyListings extends AppCompatActivity implements
         View.OnClickListener  {
 
-    //MyListings Activity for pulling all DB entries created by user - matched to unique UID
+    //MyListings Activity for pulling all DB entries created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +38,9 @@ public class MyListings extends AppCompatActivity implements
             Intent createListing = new Intent(MyListings.this, CreateListingDB.class);
             startActivity(createListing);
         } else if (i == R.id.editListingButton) {
-
+            //did not finish this section of the project
         } else if (i == R.id.deleteListingButton){
-
+            //did not finish this section of the project
         } else if (i == R.id.myListingsBackButton){
             Intent backToMain = new Intent(MyListings.this, MainActivity.class);
             startActivity(backToMain);

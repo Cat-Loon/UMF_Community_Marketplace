@@ -1,6 +1,13 @@
+/* Authored by: Jared Suave
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+ */
+
 package com.umfmarketplace;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +21,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     ArrayList<Listing> theListings;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public MyAdapter(ArrayList<Listing> p){
         theListings = p;
@@ -26,7 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.cardview, viewGroup, false);
-        viewHolder = new myViewHolder(view);
+        viewHolder = new myViewHolder(view, mListener);
         return viewHolder;
     }
 
@@ -51,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static class myViewHolder extends RecyclerView.ViewHolder
     {
         public TextView Author, Book, ClassName, Condition, ISBNasString, PriceasString, SellerEmail;
-        public myViewHolder(View itemView){
+        public myViewHolder(View itemView, final OnItemClickListener listener){
             super(itemView);
             Author = itemView.findViewById(R.id.TheAuthor);
             Book = itemView.findViewById(R.id.TheBook);
@@ -60,6 +76,19 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ISBNasString = itemView.findViewById(R.id.ISBNasString);
             PriceasString = itemView.findViewById(R.id.PriceasString);
             SellerEmail = itemView.findViewById(R.id.SellerEmail);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

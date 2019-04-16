@@ -1,3 +1,9 @@
+/* Authored by: Jared Suave
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+ */
+
 package com.umfmarketplace;
 
 import android.content.Intent;
@@ -58,6 +64,14 @@ public class ViewListings extends AppCompatActivity implements
                 }
                 adapter = new MyAdapter(list);
                 recyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        list.get(position).openEmail(emailIntent);
+                        startActivity(emailIntent);
+                    }
+                });
             }
 
             @Override

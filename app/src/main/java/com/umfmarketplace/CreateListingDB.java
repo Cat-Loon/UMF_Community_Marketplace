@@ -1,3 +1,11 @@
+/* Authored by: Jared Suave & Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Special thanks to Mitch Tabian for his documented work on ElasticSearch and querying with Retrofit
+    and to the Firebase Google team for their support articles for Firebase Authentication
+ */
+
 package com.umfmarketplace;
 
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +50,7 @@ public class CreateListingDB extends AppCompatActivity {
     private Button scanTextbook;
     private Button backToMyListings;
     private EditText BookName, AuthorName, BookISBN, BookPrice, BookCondition, BookClassUsed, sellerEmail;
-    private  TextView PrintString;
+    private TextView PrintString;
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();

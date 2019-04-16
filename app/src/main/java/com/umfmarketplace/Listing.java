@@ -1,5 +1,8 @@
 package com.umfmarketplace;
 
+import android.content.Intent;
+import android.view.View;
+
 public class Listing {
     private String TheAuthor;
     private String TheBook;
@@ -88,5 +91,11 @@ public class Listing {
                 ", Class Used='" + ClassUsed + '\'' +
                 ", Class Used='" + SellerEmail + '\'' +
                 '}';
+    }
+
+    public void openEmail (Intent emailIntent) {
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "UMF Marketplace: I'm interested in your textbook listing!");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "I'd like to purchase this textbook. Please reply to this email to arrange a meeting for pick up and payment.");
     }
 }

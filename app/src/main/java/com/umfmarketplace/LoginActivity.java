@@ -1,3 +1,12 @@
+/* Authored by: Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Special thanks to Google Firebase team for their documentation on Firebase Authentication
+
+ */
+
+
 package com.umfmarketplace;
 
 import android.animation.Animator;
@@ -57,6 +66,7 @@ public class LoginActivity extends BaseActivity implements
     private EditText updateEmailField;
     private EditText updatePasswordField;
     private EditText updateDisplayName;
+    private TextView displayString;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -75,11 +85,10 @@ public class LoginActivity extends BaseActivity implements
         //mDetailTextView = findViewById(R.id.detail);
 
         //Text Fields
-        updatePasswordField = findViewById(R.id.fieldUpdatePassword);
-        updateEmailField = findViewById(R.id.fieldUpdateEmail);
         updateDisplayName = findViewById(R.id.fieldUpdateDisplayName);
         mEmailField = findViewById(R.id.fieldEmail);
         mPasswordField = findViewById(R.id.fieldPassword);
+        displayString = findViewById(R.id.displayStringResult);
         //mNameField = findViewById(R.id.fieldName);
         //mMajorField = findViewById(R.id.fieldMajor);
 
@@ -91,6 +100,8 @@ public class LoginActivity extends BaseActivity implements
         findViewById(R.id.updateProfileButton).setOnClickListener(this);
         findViewById(R.id.passwordResetButton).setOnClickListener(this);
         findViewById(R.id.verifyEmailButton).setOnClickListener(this);
+        findViewById(R.id.mainMenuButton).setOnClickListener(this);
+        findViewById(R.id.emailSupportButton).setOnClickListener(this);
 
         //findViewById(R.id.testScanButton).setOnClickListener(this);
 
@@ -172,6 +183,7 @@ public class LoginActivity extends BaseActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            getDisplayName();
                             Toast.makeText(LoginActivity.this, "Signed in successfully.",
                                     Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -291,6 +303,7 @@ public class LoginActivity extends BaseActivity implements
             //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
             //user.getEmail(), user.isEmailVerified()));
             //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+            getDisplayName();
             findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
             findViewById(R.id.emailPasswordFields).setVisibility(View.GONE);
             findViewById(R.id.LogoStuff).setVisibility(View.GONE);
@@ -313,56 +326,6 @@ public class LoginActivity extends BaseActivity implements
             findViewById(R.id.mainMenuNavigation).setVisibility(View.GONE);
         }
     }
-    public void checkCurrentUser() {
-        // [START check_current_user]
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            // User is signed in
-        } else {
-            // No user is signed in
-        }
-        // [END check_current_user]
-    }
-
-    public void getUserProfile() {
-        // [START get_user_profile]
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            // Name, email address, and profile photo Url
-            String displayName = currentUser.getDisplayName();
-            String userEmail = currentUser.getEmail();
-            Uri photoUrl = currentUser.getPhotoUrl();
-
-            // Check if user's email is verified
-            boolean emailVerified = currentUser.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            String uid = currentUser.getUid();
-        }
-        // [END get_user_profile]
-    }
-
-    public void getProviderData() {
-        // [START get_provider_data]
-        final FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            for (UserInfo profile : user.getProviderData()) {
-                // Id of the provider (ex: google.com)
-                String providerId = profile.getProviderId();
-
-                // UID specific to the provider
-                String uid = profile.getUid();
-
-                // Name, email address, and profile photo Url
-                String name = profile.getDisplayName();
-                String email = profile.getEmail();
-                Uri photoUrl = profile.getPhotoUrl();
-            }
-        }
-        // [END get_provider_data]
-    }
 
     public void updateProfile() {
             // [START update_profile]
@@ -383,6 +346,7 @@ public class LoginActivity extends BaseActivity implements
                                 Toast.makeText(LoginActivity.this,
                                         "User profile updated.",
                                         Toast.LENGTH_SHORT).show();
+                                updateUI(user);
                             }
                         }
                     });
@@ -460,43 +424,14 @@ public class LoginActivity extends BaseActivity implements
         // [END delete_user]
     }
 
-    /*public void reauthenticate() {
-        // [START reauthenticate]
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(email, password);
-
-        // Prompt the user to re-provide their sign-in credentials
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "User re-authenticated.");
-                    }
-                });
-        // [END reauthenticate]
-    }*/
-
-    public void buildActionCodeSettings() {
-        // [START auth_build_action_code_settings]
-        ActionCodeSettings actionCodeSettings =
-                ActionCodeSettings.newBuilder()
-                        // URL you want to redirect back to. The domain (www.example.com) for this
-                        // URL must be whitelisted in the Firebase Console.
-                        .setUrl("https://www.example.com/finishSignUp?cartId=1234")
-                        // This must be true
-                        .setHandleCodeInApp(true)
-                        .setIOSBundleId("com.example.ios")
-                        .setAndroidPackageName(
-                                "com.example.android",
-                                true, /* installIfNotAvailable */
-                                "12"    /* minimumVersion */)
-                        .build();
-        // [END auth_build_action_code_settings]
+    public void getDisplayName(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = auth.getCurrentUser();
+        if(user != null){
+            String displayName;
+            displayName = "Welcome, " + user.getDisplayName();
+            displayString.setText(displayName);
+        }
     }
 
     @Override
@@ -508,20 +443,23 @@ public class LoginActivity extends BaseActivity implements
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
         } else if (i == R.id.emailSignInButton) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            getDisplayName();
         } else if (i == R.id.signOutButton) {
             signOut();
-        } /*else if (i == R.id.testScanButton){
-            Intent intent = new Intent(LoginActivity.this, ListingActivity.class);
-            startActivity(intent);
-        }*/ else if (i == R.id.verifyEmailButton) {
+        } else if (i == R.id.verifyEmailButton) {
             sendEmailVerification();
         } else if (i == R.id.updateProfileButton){
             updateProfile();
         } else if (i == R.id.passwordResetButton){
             sendPasswordReset();
         } else if (i == R.id.mainMenuButton){
-            Intent mainMenu = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(mainMenu);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else if (i == R.id.emailSupportButton){
+            Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "kaslater@umich.edu"));
+            email.putExtra(Intent.EXTRA_SUBJECT, "UMF Marketplace: Problem Reported");
+            email.putExtra(Intent.EXTRA_TEXT, "Please enter the details of your problem below: ");
+            startActivity(email);
         }
     }
 }

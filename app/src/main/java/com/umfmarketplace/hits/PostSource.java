@@ -1,3 +1,11 @@
+/* Authored by: Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Special thanks to Mitch Tabian for his documented work on ElasticSearch and querying with Retrofit
+    and to the Firebase Google team for their support articles for Firebase Authentication
+ */
+
 package com.umfmarketplace.hits;
 
 import com.google.firebase.database.IgnoreExtraProperties;

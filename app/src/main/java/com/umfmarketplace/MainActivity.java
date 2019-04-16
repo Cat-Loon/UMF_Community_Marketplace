@@ -61,9 +61,10 @@ public class MainActivity extends BaseActivity implements
         findViewById(R.id.MyListingsButton).setOnClickListener(this);
         findViewById(R.id.SearchTextbooksButton).setOnClickListener(this);
         findViewById(R.id.ViewTextbooksButton).setOnClickListener(this);
-        findViewById(R.id.PreviousSalesButton).setOnClickListener(this);
+        //findViewById(R.id.PreviousSalesButton).setOnClickListener(this);
         //findViewById(R.id.MessagesButton).setOnClickListener(this);
-        findViewById(R.id.SignOutMainButton).setOnClickListener(this);
+        findViewById(R.id.signOutMainButton).setOnClickListener(this);
+        findViewById(R.id.accountSettingsButton).setOnClickListener(this);
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -108,10 +109,13 @@ public class MainActivity extends BaseActivity implements
         } else if (i == R.id.ViewTextbooksButton) {
             Intent ViewListings = new Intent(MainActivity.this, ViewListings.class);
             startActivity(ViewListings);
-        } else if (i == R.id.PreviousSalesButton) {
-
-        } else if (i == R.id.SignOutMainButton){
-            signOut();
+        } else if (i == R.id.accountSettingsButton) {
+            Intent backToLogin = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(backToLogin);
+        } else if (i == R.id.signOutMainButton){
+            FirebaseAuth.getInstance().signOut();
+            Intent backToLogin = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(backToLogin);
         }
     }
     /*var user = FirebaseUser.get

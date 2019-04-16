@@ -1,3 +1,8 @@
+/* Authored by: Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+ */
 package com.umfmarketplace;
 
 import android.app.ProgressDialog;

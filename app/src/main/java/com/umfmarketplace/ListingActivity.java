@@ -1,3 +1,10 @@
+/* Authored by: Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Below has been implemented with the help of ZXing Barcode Scanner library
+ */
+
 package com.umfmarketplace;
 
 import android.content.DialogInterface;
@@ -27,6 +34,7 @@ public class ListingActivity extends AppCompatActivity implements ZXingScannerVi
         super.onCreate(savedInstanceState);
         Log.e("onCreate", "onCreate");
 
+        //creates the camera view and checks if camera permission has already been granted
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -40,6 +48,7 @@ public class ListingActivity extends AppCompatActivity implements ZXingScannerVi
         }
     }
 
+    //permission methods to grant use of camera
     private boolean checkPermission() {
         return ( ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA ) == PackageManager.PERMISSION_GRANTED);
     }
@@ -77,6 +86,7 @@ public class ListingActivity extends AppCompatActivity implements ZXingScannerVi
         }
     }
 
+    //Dialog box that will appear when a barcode is successfully scanned
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new android.support.v7.app.AlertDialog.Builder(ListingActivity.this)
                 .setMessage(message)
@@ -85,6 +95,7 @@ public class ListingActivity extends AppCompatActivity implements ZXingScannerVi
                 .create()
                 .show();
     }
+
 
     @Override
     public void onResume() {
@@ -111,6 +122,7 @@ public class ListingActivity extends AppCompatActivity implements ZXingScannerVi
         mScannerView.stopCamera();
     }
 
+    //handles barcode scan result - passes raw string to a google search
     @Override
     public void handleResult(Result rawResult) {
 

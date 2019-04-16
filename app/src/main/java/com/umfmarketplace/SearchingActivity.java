@@ -1,7 +1,16 @@
+/* Authored by: Katelynn Slater
+University of Michigan-Flint
+Winter 2019 Capstone Project
+
+Special thanks to Mitch Tabian for his work on ElasticSearch and Retrofit
+
+ */
+
 package com.umfmarketplace;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,45 +91,19 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
         mSearchField = findViewById(R.id.search_field);
         //Button
         findViewById(R.id.searchButton).setOnClickListener(this);
+        findViewById(R.id.MainButton).setOnClickListener(this);
+
 
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
-
-        /*
-        mAuthor = findViewById(R.id.author);
-        mBook = findViewById(R.id.book);
-        mISBN = findViewById(R.id.isbn);
-        mPrice = findViewById(R.id.price);
-        mCondition = findViewById(R.id.condition);
-        mClassUsed = findViewById(R.id.classused);*/
 
         getElasticPassword();
         init();
 
     }
 
-    /*private void setUpListingsList(){
-
-        RecyclerViewMargin itemDecorator = new RecyclerViewMargin(GRID_ITEM_MARGIN, NUM_GRID_COLUMNS);
-        mRecyclerView.addItemDecoration(itemDecorator);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(SearchingActivity.this, NUM_GRID_COLUMNS);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-        mAdapter = new MyAdapter(mLists);
-        mRecyclerView.setAdapter(mAdapter);
-
-    }*/
-
     private void init() {
-        /*mFilters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startScan = new Intent(SearchingActivity.this, FilterActivity.class);
-                startActivity(startScan);
-            }
-        });*/
-
-        //getPostInfo();
 
         mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -169,6 +152,14 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                                 }
                                 mAdapter = new MyAdapter(mLists);
                                 mRecyclerView.setAdapter(mAdapter);
+                                mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                        mLists.get(position).openEmail(emailIntent);
+                                        startActivity(emailIntent);
+                                    }
+                                });
 
                                 Log.d(TAG, "onResponse: size: " + mLists.size());
                                 //setup the list of posts
@@ -194,48 +185,6 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
             }
         });
     }
-
-    /*private void getPostInfo(){
-        Log.d(TAG, "getPostInfo: getting the post information.");
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-
-        Query query = reference.child(getString(R.string.node_elastic))
-                .orderByKey()
-                .equalTo(mListID);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot singleSnapshot = dataSnapshot.getChildren().iterator().next();
-                if(singleSnapshot != null){
-                    List = singleSnapshot.getValue(Listing.class);
-                    Log.d(TAG, "onDataChange: found the listing: " + List.getTheAuthor());
-
-                    mAuthor.setText(List.getTheAuthor());
-                    mBook.setText(List.getTheBook());
-
-                    String price = "FREE";
-                    if(List.getPriceasString() != null){
-                        price = "$" + List.getPriceasString();
-                    }
-
-                    mPrice.setText(price);
-                    mISBN.setText(List.getISBNasString());
-                    mCondition.setText(List.getCondition());
-                    mClassUsed.setText(List.getClassUsed());
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
     private void getElasticPassword(){
         Log.d(TAG,"Retrieving ElasticSearch password from Firebase");
@@ -319,6 +268,14 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                         Log.d(TAG, "onResponse - size: " + mLists.size());
                         mAdapter = new MyAdapter(mLists);
                         mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                mLists.get(position).openEmail(emailIntent);
+                                startActivity(emailIntent);
+                            }
+                        });
                         //Set up list of Book Listings
                         //setUpListingsList();
                     }
@@ -340,6 +297,10 @@ public class SearchingActivity extends CreateListingDB implements View.OnClickLi
                     Toast.makeText(SearchingActivity.this,"Firebase DB Search Failed", Toast.LENGTH_SHORT).show();
                 }
             });
+
+        } else if (i == R.id.MainButton){
+            Intent mainMenu = new Intent(SearchingActivity.this, MainActivity.class);
+            startActivity(mainMenu);
         }
     }
 }
